@@ -3,8 +3,8 @@ use ExemploCrudPoo\Fabricante;
 require_once "../vendor/autoload.php";
 
 $fabricante = new Fabricante;
-// $listaDeFabricantes = lerFabricantes($conexao);
-// $quantidade = count($listaDeFabricantes);
+ $listaDeFabricantes = $fabricante->lerFabricantes();
+ $quantidade = count($listaDeFabricantes);
 ?>
 <pre><?=var_dump($fabricante)?></pre>
 <!DOCTYPE html>
