@@ -50,7 +50,7 @@ final class Fabricante
         $sql = "SELECT * FROM fabricantes WHERE id = :id";
     
         try {
-            $consulta = $$this->conexao->prepare($sql);
+            $consulta = $this->conexao->prepare($sql);
             $consulta->bindValue(":id", $this->id, PDO::PARAM_INT);
             $consulta->execute();
             $resultado = $consulta->fetch(PDO::FETCH_ASSOC);
@@ -61,6 +61,18 @@ final class Fabricante
         return $resultado;
     } 
 
+    public function atualizarFabricante():void {
+        $sql = "UPDATE fabricantes SET nome = :nome WHERE id = :id";
+        
+        try {
+            $consulta = $this->conexao->prepare($sql);
+            $consulta->bindValue(":nome", $this->nome, PDO::PARAM_STR);
+            $consulta->bindValue(":id", $this->id, PDO::PARAM_INT);
+            $consulta->execute();
+        } catch (Exception $erro) {
+            die("Erro ao atualizar: ".$erro->getMessage());
+        }
+    } 
 
     public function getId(): int{return $this->id;}
 
