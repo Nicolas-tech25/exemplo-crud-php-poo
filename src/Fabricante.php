@@ -46,17 +46,25 @@ final class Fabricante
     
     }
 
+    public function lerUmFabricante():array {
+        $sql = "SELECT * FROM fabricantes WHERE id = :id";
+    
+        try {
+            $consulta = $$this->conexao->prepare($sql);
+            $consulta->bindValue(":id", $this->id, PDO::PARAM_INT);
+            $consulta->execute();
+            $resultado = $consulta->fetch(PDO::FETCH_ASSOC);
+        } catch (Exception $erro) {
+            die("Erro ao carregar: ".$erro->getMessage());
+        }
+    
+        return $resultado;
+    } 
 
-    public function getId(): int
-    {
-        return $this->id;
-    }
 
-    public function setId(int $id): self
-    {
-        $this->id = $id;
-        return $this;
-    }
+    public function getId(): int{return $this->id;}
+
+    public function setId(int $id): self{$this->id = $id;return $this;}
 
     public function getNome(): string
     {
