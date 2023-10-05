@@ -1,7 +1,7 @@
 <?php
 require_once "../vendor/autoload.php";
 use ExemploCrudPoo\Fabricante;
-$fabricante = new fabricante;
+$fabricante = new Fabricante;
 $fabricante->setId($_GET['id']);
 $dadosFabricante = $fabricante->lerUmFabricante();  
 
