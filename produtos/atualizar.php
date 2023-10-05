@@ -1,34 +1,19 @@
 <?php
-require_once "../src/funcoes-produtos.php";
-require_once "../src/funcoes-fabricantes.php";
-$listaDeFabricantes = lerFabricantes($conexao);
+require_once "../vendor/autoload.php";
+use ExemploCrudPoo\Produtos;
 
-$id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_NUMBER_INT);
-$produto = lerUmProduto($conexao, $id);
+$produtos = new Produtos;
+
+$produtos->setId($_GET['id']);
+$produtos = $produto->lerUmProduto();
 
 if(isset($_POST['atualizar'])){
-    $nome = filter_input(INPUT_POST, "nome", FILTER_SANITIZE_SPECIAL_CHARS);
-    
-    $preco = filter_input(
-        INPUT_POST, "preco", 
-        FILTER_SANITIZE_NUMBER_FLOAT,
-        FILTER_FLAG_ALLOW_FRACTION
-    );
-
-    $quantidade = filter_input(
-        INPUT_POST, "quantidade", FILTER_SANITIZE_NUMBER_INT
-    );
-
-    $fabricanteId = filter_input(
-        INPUT_POST, "fabricante", FILTER_SANITIZE_NUMBER_INT
-    );
-
-    $descricao = filter_input(INPUT_POST, "descricao", FILTER_SANITIZE_SPECIAL_CHARS);
-
-    atualizarProduto(
-        $conexao, $id, $nome, $preco, $quantidade, $descricao, $fabricanteId
-    );
-
+    $produto->setNome($_POST['nome']);
+    $produto->setPreco($_POST['preco']);
+    $produto->setQuantidade($_POST['quantidade']);
+    //set fabricante Id
+    $produto->setDescricao();
+    $produto->atualizarProduto(); 
     header("location:visualizar.php");
 }
 ?>
@@ -77,7 +62,7 @@ if(isset($_POST['atualizar'])){
             <p>
                 <label for="descricao">Descrição:</label> <br>
                 <textarea name="descricao" id="descricao" cols="30" rows="3"><?=$produto['descricao']?></textarea>
-            </p>
+            </p>''
             <button type="submit" name="atualizar">Atualizar produto</button>
         </form>
         <hr>

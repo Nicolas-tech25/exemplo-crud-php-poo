@@ -1,32 +1,18 @@
 <?php
-require_once "../src/funcoes-fabricantes.php";
-require_once "../src/funcoes-produtos.php";
+require_once "../vendor/autoload.php";
+use ExemploCrudPoo\Produtos;
 
-$listaDeFabricantes = lerFabricantes($conexao);
+
 
 if(isset($_POST['inserir'])){
-    $nome = filter_input(INPUT_POST, "nome", FILTER_SANITIZE_SPECIAL_CHARS);
-    
-    $preco = filter_input(
-        INPUT_POST, "preco", 
-        FILTER_SANITIZE_NUMBER_FLOAT,
-        FILTER_FLAG_ALLOW_FRACTION
-    );
+    $produtos->setNome($_POST['inserir']);
+    $produtos->setPreco($_POST['preço']);
+    $produtos->setQuantidade($_POST['quantidade']);
+    //set fabricante Id
+    $descricao->setDescricao($_POST['descrição']);
 
-    $quantidade = filter_input(
-        INPUT_POST, "quantidade", FILTER_SANITIZE_NUMBER_INT
-    );
-
-    $fabricanteId = filter_input(
-        INPUT_POST, "fabricante", FILTER_SANITIZE_NUMBER_INT
-    );
-
-    $descricao = filter_input(INPUT_POST, "descricao", FILTER_SANITIZE_SPECIAL_CHARS);
-
-    inserirProduto(
-        $conexao, $nome, $preco, $quantidade, $fabricanteId, $descricao
-    );
-
+    $produtos = new Produtos;
+    $produtos = $produtos->inserirProduto();
     header("location:visualizar.php");
 }
 ?>
