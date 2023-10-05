@@ -5,7 +5,7 @@ use ExemploCrudPoo\Produtos;
 $produtos = new Produtos;
 
 $produtos->setId($_GET['id']);
-$produtos = $produto->lerUmProduto();
+$dadosProdutos = $produtos->lerUmProduto();
 
 if(isset($_POST['atualizar'])){
     $produto->setNome($_POST['nome']);
@@ -32,17 +32,17 @@ if(isset($_POST['atualizar'])){
         <form action="" method="post">
             <p>
                 <label for="nome">Nome:</label>
-                <input value="<?=$produto['nome']?>" type="text" name="nome" id="nome" required>
+                <input value="<?=$dadosProdutos['nome']?>" type="text" name="nome" id="nome" required>
             </p>
             <p>
                 <label for="preco">Preço:</label>
-                <input value="<?=$produto['preco']?>"
+                <input value="<?=$dadosProdutos['preco']?>"
                 type="number" min="10" max="10000" step="0.01"
                  name="preco" id="preco" required>
             </p>
             <p>
                 <label for="quantidade">Quantidade:</label>
-                <input value="<?=$produto['quantidade']?>"
+                <input value="<?=$dadosProdutos['quantidade']?>"
                 type="number" min="1" max="100"
                  name="quantidade" id="quantidade" required>
             </p>
@@ -61,8 +61,8 @@ if(isset($_POST['atualizar'])){
             </p>
             <p>
                 <label for="descricao">Descrição:</label> <br>
-                <textarea name="descricao" id="descricao" cols="30" rows="3"><?=$produto['descricao']?></textarea>
-            </p>''
+                <textarea name="descricao" id="descricao" cols="30" rows="3"><?=$dadosProdutos['descricao']?></textarea>
+            </p>
             <button type="submit" name="atualizar">Atualizar produto</button>
         </form>
         <hr>
