@@ -10,7 +10,6 @@ final class Produtos
     private float $preco;
     private int $quantidade;
     private int $fabricanteId;
-
     private PDO $conexao;
 
     public function __construct()
@@ -24,8 +23,7 @@ final class Produtos
                     produtos.nome AS produto,
                     produtos.preco,
                     produtos.quantidade,
-                    fabricantes.nome AS fabricante,
-                    (produtos.preco * produtos.quantidade) AS total
+                    fabricantes.nome AS fabricante
                 FROM produtos INNER JOIN fabricantes
                 ON produtos.fabricante_id = fabricantes.id
                 ORDER BY produto";
@@ -51,11 +49,11 @@ final class Produtos
     
         try {
             $consulta = $this->conexao->prepare($sql);
-            $consulta->bindValue(":nome", $this->nome, PDO::PARAM_STR);
-            $consulta->bindValue(":preco", $this->preco, PDO::PARAM_STR);
-            $consulta->bindValue(":quantidade", $this->quantidade, PDO::PARAM_INT);
-            $consulta->bindValue(":descricao", $this->descricao, PDO::PARAM_STR);
-            $consulta->bindValue(":fabricanteId", $this->fabricanteId, PDO::PARAM_INT);
+            $consulta->bindValue(":nome", $this->nome, \PDO::PARAM_STR);
+            $consulta->bindValue(":preco", $this->preco, \PDO::PARAM_STR);
+            $consulta->bindValue(":quantidade", $this->quantidade, \PDO::PARAM_INT);
+            $consulta->bindValue(":descricao", $this->descricao, \PDO::PARAM_STR);
+            $consulta->bindValue(":fabricanteId", $this->fabricanteId, \PDO::PARAM_INT);
             $consulta->execute();
         } catch (Exception $erro) {
             die("Erro ao inserir: ".$erro->getMessage());
@@ -108,78 +106,31 @@ final class Produtos
     }
     }
 
-
+    /* =============== */
     /* GETER E SETTERS */
+    /* =============== */
 
-    public function getId(): int
-    {
-        return $this->id;
-    }
+    public function getId(): int{return $this->id;}
 
-    public function setId(int $id): self
-    {
-        $this->id = $id;
+    public function setId(int $id): self{$this->id = $id;return $this;}
 
-        return $this;
-    }
+    public function getNome(): string{return $this->nome;}
 
-    public function getNome(): string
-    {
-        return $this->nome;
-    }
+    public function setNome(string $nome): self{$this->nome = filter_var($nome, FILTER_SANITIZE_SPECIAL_CHARS) ;return $this;}
 
-    public function setNome(string $nome): self
-    {
-        $this->nome = $nome;
+    public function getDescricao(): string{return $this->descricao;}
 
-        return $this;
-    }
+    public function setDescricao(string $descricao): self{$this->descricao = $descricao;return $this;}
 
-    public function getDescricao(): string
-    {
-        return $this->descricao;
-    }
+    public function getPreco(): float{ return $this->preco;}
 
-    public function setDescricao(string $descricao): self
-    {
-        $this->descricao = $descricao;
+    public function setPreco(float $preco): self{$this->preco = $preco;return $this;}
 
-        return $this;
-    }
+    public function getQuantidade(): int{return $this->quantidade;}
 
-    public function getPreco(): float
-    {
-        return $this->preco;
-    }
+    public function setQuantidade(int $quantidade): self{$this->quantidade = $quantidade;return $this;}
 
-    public function setPreco(float $preco): self
-    {
-        $this->preco = $preco;
+    public function getFabricanteId(): int{return $this->fabricanteId;}
 
-        return $this;
-    }
-
-    public function getQuantidade(): int
-    {
-        return $this->quantidade;
-    }
-
-    public function setQuantidade(int $quantidade): self
-    {
-        $this->quantidade = $quantidade;
-
-        return $this;
-    }
-
-    public function getFabricanteId(): int
-    {
-        return $this->fabricanteId;
-    }
-
-    public function setFabricanteId(int $fabricanteId): self
-    {
-        $this->fabricanteId = $fabricanteId;
-
-        return $this;
-    }
+    public function setFabricanteId(int $fabricanteId): self{$this->fabricanteId = $fabricanteId;return $this;}
 }

@@ -1,19 +1,21 @@
 <?php
 require_once "../vendor/autoload.php";
 use ExemploCrudPoo\Produtos;
+use ExemploCrudPoo\Fabricante;
 
-$produtos = new Produtos;
-
-$produtos->setId($_GET['id']);
-$dadosProdutos = $produtos->lerUmProduto();
+$fabricante = new Fabricante;
+$listaDeFabricantes = $fabricante->lerFabricantes();
+$fabricante->setId($_GET['id']);
 
 if(isset($_POST['atualizar'])){
-    $produto->setNome($_POST['nome']);
-    $produto->setPreco($_POST['preco']);
-    $produto->setQuantidade($_POST['quantidade']);
-    //set fabricante Id
-    $produto->setDescricao();
-    $produto->atualizarProduto(); 
+    $produtos = new Produtos;
+
+    $produtos->setNome($_POST['nome']);
+    $produtos->setPreco($_POST['preco']);
+    $produtos->setQuantidade($_POST['quantidade']);
+    $produtos->setFabricanteId($_POST['fabricante']);
+    $produtos->setDescricao($_POST['descricao']);
+    $produtos->atualizarProduto(); 
     header("location:visualizar.php");
 }
 ?>
@@ -32,17 +34,17 @@ if(isset($_POST['atualizar'])){
         <form action="" method="post">
             <p>
                 <label for="nome">Nome:</label>
-                <input value="<?=$dadosProdutos['nome']?>" type="text" name="nome" id="nome" required>
+                <input value="<?=$produtos['nome']?>" type="text" name="nome" id="nome" required>
             </p>
             <p>
                 <label for="preco">Preço:</label>
-                <input value="<?=$dadosProdutos['preco']?>"
+                <input value="<?=$produtos['preco']?>"
                 type="number" min="10" max="10000" step="0.01"
                  name="preco" id="preco" required>
             </p>
             <p>
                 <label for="quantidade">Quantidade:</label>
-                <input value="<?=$dadosProdutos['quantidade']?>"
+                <input value="<?=$produtos['quantidade']?>"
                 type="number" min="1" max="100"
                  name="quantidade" id="quantidade" required>
             </p>
@@ -51,17 +53,16 @@ if(isset($_POST['atualizar'])){
                 <select name="fabricante" id="fabricante" required>
                     <option value=""></option>
         
-                    <?php foreach( $listaDeFabricantes as $fabricante ) { ?>
-                        <option <?php if($produto["fabricante_id"] === $fabricante["id"]) echo " selected "; ?>
-                        value="<?=$fabricante['id']?>">
-                            <?=$fabricante['nome']?>
-                        </option>
+                    <?php foreach ($listaDeFabricantes as $UmFabricante) { ?>
+                        <option value="<?= $UmFabricante['id'] ?>">
+                            <?= $UmFabricante['nome'] ?>
+                        </opti on>
                     <?php } ?>
                 </select>
             </p>
             <p>
                 <label for="descricao">Descrição:</label> <br>
-                <textarea name="descricao" id="descricao" cols="30" rows="3"><?=$dadosProdutos['descricao']?></textarea>
+                <textarea name="descricao" id="descricao" cols="30" rows="3"><?=$produtos['descricao']?></textarea>
             </p>
             <button type="submit" name="atualizar">Atualizar produto</button>
         </form>

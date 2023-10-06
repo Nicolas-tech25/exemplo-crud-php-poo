@@ -7,14 +7,18 @@ use ExemploCrudPoo\Fabricante;
 $fabricante = new Fabricante;
 $listaDeFabricantes = $fabricante->lerFabricantes();
 
-if (isset($_POST['inserir'])) {
 
+
+
+if (isset($_POST['inserir'])) {
     $produtos = new Produtos;
-    $produto->inserirProduto();
-    $produto->setNome($_POST['inserir']);
-    $produto->setPreco($_POST['preço']);
-    $produto->setQuantidade($_POST['quantidade']);
-    $descricao->setDescricao($_POST['descrição']);
+    
+    $produtos->setNome($_POST['nome']);
+    $produtos->setPreco($_POST['preco']);
+    $produtos->setQuantidade($_POST['quantidade']);
+    $produtos->setFabricanteId($_POST['fabricante']);
+    $produtos->setDescricao($_POST['descricao']);
+    $produtos->inserirProduto();
     header("location:visualizar.php");
 }
 ?>
