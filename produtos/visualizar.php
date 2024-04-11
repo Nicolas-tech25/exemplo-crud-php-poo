@@ -1,7 +1,10 @@
 <?php
-require_once "../src/funcoes-produtos.php";
-require_once "../src/funcoes-utilitarias.php";
-$listaDeProdutos = lerProdutos($conexao);
+use ExemploCrudPoo\Produtos;
+use ExemploCrudPoo\Utilitarias;
+require_once "../vendor/autoload.php";
+
+$produtos = new Produtos;
+$listaDeProdutos = $produtos->lerProdutos();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -19,19 +22,19 @@ $listaDeProdutos = lerProdutos($conexao);
         <p><a href="inserir.php">
             Inserir novo produto</a></p>
         <div class="row">
-<?php foreach( $listaDeProdutos as $produto ){ ?>
+<?php foreach( $listaDeProdutos as $produtos ){ ?>
             <div class="col-md-6">
                 <article class="shadow p-2">
-                    <h3> <?=$produto["produto"]?> </h3>
-                    <h4> <?=$produto["fabricante"]?> </h4>
-                    <p><b>Preço:</b> <?=formatarPreco($produto["preco"])?> </p>
-                    <p><b>Quantidade:</b> <?=$produto["quantidade"]?> </p>
+                    <h3> <?=$produtos["produto"]?> </h3>
+                    <h4> <?=$produtos["fabricante"]?> </h4>
+                    <p><b>Preço:</b> <?= Utilitarias::formatarPreco($produtos["preco"])?> </p>
+                    <p><b>Quantidade:</b> <?=$produtos["quantidade"]?> </p>
                     <p><b>Total:</b>
-                    <?=calcularTotal($produto["preco"], $produto["quantidade"])?></p>
+                    <?=Utilitarias::calcularTotal($produtos["preco"], $produtos["quantidade"])?></p>
                     <hr>
                     <p>
-                        <a href="atualizar.php?id=<?=$produto["id"]?>">Editar</a> |
-                        <a class="excluir" href="excluir.php?id=<?=$produto["id"]?>">Excluir</a>
+                        <a href="atualizar.php?id=<?=$produtos["id"]?>">Editar</a> |
+                        <a class="excluir" href="excluir.php?id=<?=$produtos["id"]?>">Excluir</a>
                     </p>
                 </article>
             </div>
